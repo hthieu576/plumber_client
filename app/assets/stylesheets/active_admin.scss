@@ -1,3 +1,4 @@
+@import 'activeadmin_addons/all';
 // Sass variable overrides must be declared before loading up Active Admin's styles.
 //
 // To view the variables that Active Admin provides, take a look at
@@ -10,8 +11,23 @@
 // Active Admin's got SASS!
 @import "active_admin/mixins";
 @import "active_admin/base";
+@import "bootstrap-sprockets";
+@import "bootstrap";
 
 // Overriding any non-variable Sass must be done after the fact.
 // For example, to change the default status-tag color:
 //
 //   .status_tag { background: #6090DB; }
+
+li label.label {
+  display: inline;
+  padding: 0.2em 0.6em 0.3em;
+  font-size: 100%;
+  font-weight: 700;
+  line-height: 1;
+  color: #5E6469;
+  text-align: left;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.25em;
+}

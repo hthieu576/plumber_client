@@ -1,19 +1,27 @@
-.row
-  .col-4
-    %table{:width=>"100%",:border=>"1"}
+%table.table.table-striped
+  %thead.thead-light
+    %tr
+      %th ID
+      %th Description
+      %th Client Name
+      %th Client Address
+      %th Plumber Name
+      %th Plumber Address
+      %th Vehicles
+      %th Time Period
+      %th Estimate Distance(km)
+      %th Estimate Arrival Time(mins)
+  %tbody
+    - jobs.each do |job|
       %tr
-        %th #
-        %th Name
-        %th Mobile
-      %tr
-        %td 1
-        %td Abhijeet
-        %td 8408078255
-      %tr
-        %td 2
-        %td Abhay
-        %td 8805745988
-      %tr 
-        %td 3
-        %td Sai
-        %td 9657026705
+        %td= job.id
+        %td= job.description
+        %td= job.client.name
+        %td= job.client.address
+        %td= job.plumber.name
+        %td= job.plumber.address
+        %td= job.plumber.vehicles
+        %td= job.time_period
+        %td= job.estimate_distance
+        %td= job.estimate_time_by_vehicles
+    

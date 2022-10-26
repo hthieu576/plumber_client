@@ -19,7 +19,7 @@ class Job < ApplicationRecord
 
   validates :description, :client_id, :plumber_id, :time_period, presence: true
 
-  scope :allocated, -> { where(status: :assigned).where("time_period >= ?", DateTime.current) }
+  scope :allocated, -> { includes(:client, :plumber).where(status: :assigned).where("time_period >= ?", DateTime.current) }
 
   enum status: { assigned: 0, finished: 1 }
 

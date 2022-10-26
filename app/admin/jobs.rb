@@ -1,4 +1,5 @@
 ActiveAdmin.register Job do
+  config.filters = false
   permit_params :description, :client_id, :time_period, :status, :plumber_id
 
   form do |f|
