@@ -24,7 +24,7 @@ class ApiToken < ApplicationRecord
     payload = {
       access_key: access_key
     }
-    ::JWT.encode(payload, secret_key, Figaro.env.JWT_ENCRYPTION_METHOD)
+    ::JWT.encode(payload, secret_key, 'HS256')
   end
 
 	private

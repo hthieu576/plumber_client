@@ -54,6 +54,9 @@ gem 'active_admin_datetimepicker'
 # Devise
 gem 'devise', '>= 4.7.1'
 
+# Configuration
+gem 'figaro'
+
 # Lat, Long distance
 gem 'geocoder', '~> 1.3', '>= 1.3.7'
 
