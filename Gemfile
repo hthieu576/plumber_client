@@ -26,8 +26,6 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
 gem 'rubocop-rails', require: false
 
 # Use ActiveStorage variant
@@ -40,7 +38,6 @@ gem 'rubocop-rails', require: false
 gem 'mysql2'
 
 # View
-gem 'slim-rails', '~> 3.1', '>= 3.1.1'
 gem 'haml', '~> 5.1', '>= 5.1.1'
 
 # Log
@@ -60,8 +57,11 @@ gem 'devise', '>= 4.7.1'
 # Lat, Long distance
 gem 'geocoder', '~> 1.3', '>= 1.3.7'
 
-# API
-gem 'active_model_serializers'
+# Api Extension
+gem 'grape', '~> 1.4.0'
+gem 'grape-entity'
+gem 'rack-attack'
+gem 'rack-cors'
 
 # Model Extension
 gem 'annotate'
@@ -70,6 +70,10 @@ gem 'annotate'
 gem 'grape-swagger'
 gem 'grape-swagger-entity'
 gem 'grape-swagger-rails'
+
+# Authentication
+gem 'jwt'
+# gem 'bcrypt'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
