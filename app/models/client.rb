@@ -13,8 +13,8 @@
 class Client < ApplicationRecord
   has_paper_trail
 
-  has_many :plumbers, through: :jobs, dependent: :destroy
   has_many :jobs, dependent: :destroy
+  has_many :plumbers, through: :jobs, dependent: :destroy
 
   validates :name, :address, :age, presence: true
   validates :age, numericality: { greater_than_or_equal_to: 10 }
