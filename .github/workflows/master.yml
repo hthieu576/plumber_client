@@ -1,0 +1,68 @@
+name: Continuous integration
+
+env:
+  RUBY_VERSION: 2.6.0
+  BUNDLER_VERSION: 2.3.11
+  RAILS_ENV: test
+  MYSQL_USERNAME: root
+  MYSQL_PASSWORD: ''
+  MYSQL_ROOT_PASSWORD: ''
+  MYSQL_HOST: 127.0.0.1
+  MYSQL_PORT: 3307
+  MYSQL_DATABASE: plumber_schedule_test
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  test:
+    name: "RSpec Tests"
+    runs-on: ubuntu-latest
+    services:
+      db:
+        image: mysql:5.7
+        env:
+          MYSQL_USERNAME: root
+          MYSQL_PASSWORD: ''
+          MYSQL_ROOT_PASSWORD: ''
+          MYSQL_HOST: 127.0.0.1
+          MYSQL_PORT: 3307
+          MYSQL_DATABASE: plumber_schedule_test
+        ports:
+          - 3307:3306
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - name: Setup Ruby
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: ${{ env.RUBY_VERSION }}
+      - name: Install dependencies
+        run: |
+          sudo apt-get -yqq install default-libmysqlclient-dev default-mysql-client
+      - name: Restore bundle cache
+        uses: actions/cache@v2
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+      - name: Bundle
+        env:
+          RAILS_ENV: test
+        run: |
+          gem install bundler:${{ env.BUNDLER_VERSION }}
+          bundle config path vendor/bundle
+          bundle install --jobs 4 --retry 3 --path vendor/bundle
+      - name: Setup Database
+        run: |
+          bundle exec rake db:prepare
+      - name: Run tests          
+        run: bundle exec rspec
