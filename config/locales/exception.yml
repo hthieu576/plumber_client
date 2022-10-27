@@ -1,0 +1,45 @@
+# encoding: utf-8
+#
+# Never edit this file. It will be overwritten when translations are pulled from Transifex.
+#
+
+en:
+  activerecord:
+    errors:
+      models:
+        links/external:
+          attributes:
+            uri:
+              uri: Reject invalid values
+      messages:
+        blank: Null value
+  V1:
+    Exceptions:
+      Base:
+        title: title
+        body: content
+        description: Error Issue
+
+      #### ServerError
+      ServerError:
+        title: Server error
+        body: Unknown error
+        description: Unknown error
+
+      ### Unauthorized
+      Unauthorized:
+        title: Unauthorized
+        body: You do not have the necessary rights
+        description: Exceptions API access authority
+      ExpiredAccessKey:
+        body: This key has expired
+      InvalidAccessKey:
+        body: This access key is incorrect
+      JwtVerification:
+        body: This payload is incorrect
+      NoAuthorizationToken:
+        body: The access token does not exist
+      NoAccessKey:
+        body: You don't have an access key
+      NoAuthorization:
+        body: You don't have the necessary rights

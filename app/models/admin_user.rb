@@ -14,8 +14,18 @@
 class AdminUser < ApplicationRecord
   has_paper_trail
 
+  has_many :api_tokens
+
+  after_create :create_api_token!
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable,
          :recoverable, :rememberable, :validatable
+
+  private
+
+  def create_api_token!
+    api_tokens.create!(expire_at: 2.weeks.from_now)
+  end
 end
