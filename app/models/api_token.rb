@@ -27,6 +27,10 @@ class ApiToken < ApplicationRecord
     ::JWT.encode(payload, secret_key, 'HS256')
   end
 
+  def expired?
+    expire_at && expire_at < Time.zone.now
+  end
+
 	private
 
   def generate_refresh_token

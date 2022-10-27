@@ -13,7 +13,7 @@ en:
               uri: Reject invalid values
       messages:
         blank: Null value
-  v1:
+  V1:
     Exceptions:
       Base:
         title: title
