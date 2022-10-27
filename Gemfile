@@ -87,6 +87,8 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'pry-rails'
   gem 'pry-byebug'
+  gem 'faker'
+  gem 'factory_bot_rails'
 end
 
 group :development do
@@ -104,6 +106,16 @@ group :test do
   gem 'selenium-webdriver'
   # Easy installation and use of chromedriver to run system tests with Chrome
   gem 'chromedriver-helper'
+  gem 'rspec-rails'
+  gem 'rspec-collection_matchers', require: 'rspec/collection_matchers'
+  gem 'rspec-retry', require: 'rspec/retry'
+  gem 'database_cleaner'
+  gem 'guard-rspec', require: false
+  gem 'terminal-notifier-guard'
+  gem 'mocha', :require => false
+  gem 'simplecov', require: false
+  gem 'timecop'
+  gem 'rspec-instafail', require: false
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
