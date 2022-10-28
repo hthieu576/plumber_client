@@ -6,14 +6,11 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
 
     services:
       mysql:
         image: mysql:5.7
-        env:
-          MYSQL_USER: root
-          MYSQL_ALLOW_EMPTY_PASSWORD: yes
         ports:
           - 3306
         options: >-
@@ -27,12 +24,11 @@ jobs:
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: '2.6.0'
-
-    - name: Set up MySQL
+    - name: Verify MySQL connection from host
       run: |
         sudo apt-get install -y mysql-client libmysqlclient-dev
-        sudo /etc/init.d/mysql start
-        mysql --host 127.0.0.1 --port 3306 -uroot -p
+        mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -uroot -p
+        sudo service mysql start
     - name: Install dependencies
       run: |
         gem install bundler:2.3.11
@@ -42,7 +38,8 @@ jobs:
         RAILS_ENV: test
     - name: Run Tests
       run: |
-        bundle exec rake db:create
+        cp config/database.yml.github-actions config/database.yml
+        bundle exec rails db:create
         bundle exec rails db:migrate
         bundle exec rspec
       env:
