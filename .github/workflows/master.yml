@@ -12,8 +12,7 @@ jobs:
       mysql:
         image: mysql:5.7
         env:
-          MYSQL_USER: root
-          MYSQL_PASSWORD: root
+          MYSQL_ALLOW_EMPTY_PASSWORD: true
           MYSQL_DATABASE: test_db
         ports:
           - 3306:3306
