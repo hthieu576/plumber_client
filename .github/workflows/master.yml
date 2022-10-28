@@ -26,7 +26,7 @@ jobs:
     - name: Set up Ruby 2.6.0
       uses: actions/setup-ruby@v1
       with:
-        ruby-version: '2.6.0'
+        ruby-version: '2.6.0p0'
     - name: Install dependencies
       run: |
         gem install bundler:2.3.11
