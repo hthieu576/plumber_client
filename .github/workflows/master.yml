@@ -6,7 +6,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
 
     services:
       mysql:
@@ -29,11 +29,9 @@ jobs:
     - name: Verify MySQL connection from host
       run: |
         sudo apt-get install -y mysql-client libmysqlclient-dev
-        mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -uroot -proot
+        mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -uroot -p
         sudo service mysql start
         cp config/database.yml.github-actions config/database.yml
-        bundle exec rails db:create
-        bundle exec rails db:migrate
       env:
         DB_PORT: 3306
         RAILS_ENV: test
@@ -43,6 +41,8 @@ jobs:
         bundle install --jobs 4 --retry 3
     - name: Run Tests
       run: |
+        bundle exec rails db:create
+        bundle exec rails db:migrate
         bundle exec rspec
       env:
         DB_PORT: 3306
