@@ -29,7 +29,8 @@ jobs:
         ruby-version: '2.6.0'
     - name: Verify MySQL connection from host
       run: |
-        sudo /etc/init.d/mysql start
+        sudo systemctl enable mysql.service
+        sudo systemctl start mysql.service
       env:
         DB_PORT: 3306
         RAILS_ENV: test
