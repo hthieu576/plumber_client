@@ -27,7 +27,6 @@ jobs:
       uses: actions/setup-ruby@v1
       with:
         ruby-version: '2.6.0'
-        bundler-cache: true
     - name: Install dependencies
       run: |
         gem install bundler:2.3.11
