@@ -1,0 +1,30 @@
+default: &default
+  adapter: mysql2
+  encoding: utf8mb4
+  charset: utf8mb4
+  collation: utf8mb4_unicode_ci
+  reconnect: true
+  timeout: 5000
+  host: 'localhost'
+  pool: 10
+
+development:
+  <<: *default
+  database: plumber_schedule_dev
+  username: 'root'
+  password: ''
+
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
+# test:
+#   <<: *default
+#   database: plumber_schedule_test
+#   username: 'root'
+#   password: ''
+
+production:
+  <<: *default
+  database: plumber_schedule_prod
+  username: 'root'
+  password: ''
