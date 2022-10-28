@@ -31,15 +31,18 @@ jobs:
         sudo apt-get install -y mysql-client libmysqlclient-dev
         mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -uroot -proot
         sudo service mysql start
+        cp config/database.yml.github-actions config/database.yml
+        bundle exec rails db:create
+        bundle exec rails db:migrate
+      env:
+        DB_PORT: 3306
+        RAILS_ENV: test
     - name: Install dependencies
       run: |
-        cp config/database.yml.github-actions config/database.yml
         gem install bundler:2.3.11
         bundle install --jobs 4 --retry 3
     - name: Run Tests
       run: |
-        bundle exec rails db:create
-        bundle exec rails db:migrate
         bundle exec rspec
       env:
         DB_PORT: 3306
