@@ -13,7 +13,6 @@ jobs:
         image: mysql:5.7
         env:
           MYSQL_ROOT_PASSWORD: root
-          # MYSQL_DATABASE: test_db
         ports:
           - 3306:3306
         options: >-
@@ -39,8 +38,8 @@ jobs:
       run: |
         gem install bundler:2.3.11
         bundle install --jobs 4 --retry 3
-    - name: Run Tests
-      # TODO: Temporarily skip it
+    # TODO: Temporarily skip it
+    # - name: Run Tests
       # run: |
       #   cp config/database.yml.github-actions config/database.yml
       #   bundle exec rails db:create
