@@ -15,7 +15,7 @@ jobs:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
           MYSQL_DATABASE: plumber_schedule_dev
         ports:
-          - '8888:3306'
+          - 3306
         options: >-
           --health-cmd="mysqladmin ping"
           --health-interval=10s
@@ -23,20 +23,23 @@ jobs:
           --health-retries=3
     steps:
     - uses: actions/checkout@v3
-    - run: mysql -h 127.0.0.1 --port 8888 -u root -p -e 'CREATE DATABASE IF NOT EXISTS test;'
     - name: Set up Ruby 2.6.0
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: '2.6.0'
+    - name: Verify MySQL connection from host
+      run: |
+        sudo apt-get install -y mysql-client libmysqlclient-dev
+        mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -uroot -p -e "SHOW GRANTS FOR 'root'@'localhost'"
+        mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -uroot -p mysql
     - name: Install dependencies
       run: |
+        cp config/database.yml.github-actions config/database.yml
         gem install bundler:2.3.11
         bundle install --jobs 4 --retry 3
+        bundle exec rails db:setup
     - name: Run Tests
       run: |
-        cp config/database.yml.github-actions config/database.yml
-        bundle exec rails db:create
-        bundle exec rails db:migrate
         bundle exec rspec
       env:
         DB_PORT: 3306
