@@ -6,7 +6,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
 
     services:
       mysql:
@@ -39,7 +39,9 @@ jobs:
         bundle install --jobs 4 --retry 3
     - name: Run Tests
       run: |
-        sudo systemctl start mysql
+        sudo systemctl enable mysql.service
+        sudo systemctl start mysql.service
+        sudo systemctl status mysql.service
         bundle exec rails db:create
         bundle exec rails db:migrate
         bundle exec rspec
