@@ -39,6 +39,7 @@ jobs:
         bundle install --jobs 4 --retry 3
     - name: Run Tests
       run: |
+        sudo systemctl start mysql
         bundle exec rails db:create
         bundle exec rails db:migrate
         bundle exec rspec
