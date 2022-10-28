@@ -29,13 +29,13 @@ jobs:
         ruby-version: 2.6
     - name: Install dependencies
       run: |
-        gem install bundler:2.2.16
+        gem install bundler
         bundle install --jobs 4 --retry 3
     - name: Run Tests
       run: |
         sudo service mysql start
         bundle exec rails db:prepare
-        bundle exec rails test
+        bundle exec rspec
       env:
         DB_PORT: 3306
         RAILS_ENV: test
