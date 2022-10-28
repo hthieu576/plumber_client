@@ -12,12 +12,15 @@ jobs:
       mysql:
         image: mysql:5.7
         env:
-          MYSQL_DATABASE: plumber_schedule_dev
-          MYSQL_USER: root
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: plumber_schedule_dev
         ports:
           - 3306
-        options: --health-cmd "mysqladmin ping" --health-interval 10s --health-timeout 5s --health-retries 10
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
     steps:
     - uses: actions/checkout@v3
     - name: Set up Ruby 2.6.0
@@ -28,16 +31,11 @@ jobs:
       run: |
         gem install bundler:2.3.11
         bundle install --jobs 4 --retry 3
-    - name: Setup Database
-      run: |
-        cp config/database.yml.github-actions config/database.yml
-        sudo service mysql start
-        bundle exec rake db:create
-        bundle exec rails db:migrate
-      env:
-        RAILS_ENV: test
     - name: Run Tests
       run: |
+        sudo service mysql start
+        bundle exec rails db:create
+        bundle exec rails db:migrate
         bundle exec rspec
       env:
         DB_PORT: 3306
