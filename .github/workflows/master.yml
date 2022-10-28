@@ -29,8 +29,8 @@ jobs:
     - name: Verify MySQL connection from host
       run: |
         sudo apt-get install -y mysql-client libmysqlclient-dev
-        mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -uroot -p
         sudo service mysql start
+        mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -uroot -p
         cp config/database.yml.github-actions config/database.yml
       env:
         DB_PORT: 3306
