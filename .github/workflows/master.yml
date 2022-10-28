@@ -8,7 +8,8 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - run: |
+     - name: Start mysql
+      run: |
         sudo /lib/systemd/systemd-sysv-install enable mysql
         sudo systemctl enable mysql.service
         sudo systemctl start mysql.service
