@@ -2,7 +2,7 @@ test:
   adapter: mysql2
   host: localhost
   encoding: utf8mb4
-  database: test_db
+  database: plumber_schedule_test
   pool: 10
   username: root
-  password: 
+  password: root
