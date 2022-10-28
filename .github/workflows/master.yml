@@ -10,7 +10,7 @@ jobs:
 
     services:
       mysql:
-        image: mysql:5.7
+        image: mysql:8
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: true
           MYSQL_DATABASE: test_db
@@ -29,10 +29,7 @@ jobs:
         ruby-version: '2.6.0'
     - name: Verify MySQL connection from host
       run: |
-        sudo /lib/systemd/systemd-sysv-install enable mysql
-        sudo systemctl status mysql.service
-        sudo systemctl enable mysql.service
-        sudo systemctl start mysql.service
+        sudo service mysql start
       env:
         DB_PORT: 3306
         RAILS_ENV: test
