@@ -12,7 +12,9 @@ jobs:
       mysql:
         image: mysql:5.7
         env:
-          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          DB_DATABASE: test_db
+          DB_USER: root
+          DB_PASSWORD: ''
         ports:
           - 3306
         options: >-
@@ -26,18 +28,15 @@ jobs:
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: '2.6.0'
+
+    - name: Set up MySQL
+      run: |
+        sudo /etc/init.d/mysql start
+        mysql -e 'CREATE DATABASE ${{ env.DB_DATABASE }};' -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }}
     - name: Install dependencies
       run: |
         gem install bundler:2.3.11
         bundle install --jobs 4 --retry 3
-    - name: Verify MySQL connection from host
-      run: |
-        sudo apt-get install -y mysql-client libmysqlclient-dev
-        mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -uroot -p
-        sudo service mysql start
-        cp config/database.yml.github-actions config/database.yml
-        bundle exec rails db:create
-        bundle exec rails db:migrate
       env:
         DB_PORT: 3306
         RAILS_ENV: test
